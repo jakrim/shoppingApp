@@ -1,28 +1,28 @@
 import React from 'react';
 import {
-  Text,
-  StyleSheet,
   View,
+  Text,
   Image,
+  StyleSheet,
   Button,
-  Platform,
+  TouchableOpacity,
   TouchableNativeFeedback,
-  TouchableOpacity
+  Platform
 } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
 const ProductItem = props => {
-  let TouchableComponent = TouchableOpacity;
+  let TouchableComp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
-    TouchableComponent = TouchableNativeFeedback;
+    TouchableComp = TouchableNativeFeedback;
   }
 
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableComponent onPress={props.onViewDetail} useForeground>
+        <TouchableComp onPress={props.onViewDetail} useForeground>
           <View>
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{ uri: props.image }} />
@@ -39,12 +39,12 @@ const ProductItem = props => {
               />
               <Button
                 color={Colors.primary}
-                title='Add To Cart'
+                title='To Cart'
                 onPress={props.onAddToCart}
               />
             </View>
           </View>
-        </TouchableComponent>
+        </TouchableComp>
       </View>
     </View>
   );
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     height: '60%',
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     overflow: 'hidden'
   },
   image: {
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
+    height: '18%',
     padding: 10
   },
   title: {
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '25%',
+    height: '22%',
     paddingHorizontal: 20
   }
 });

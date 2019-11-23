@@ -1,4 +1,3 @@
-import PRODUCTS from '../../data/dummy-data';
 import { ADD_TO_CART } from '../actions/cart';
 import CartItem from '../../models/cart-item';
 
@@ -12,12 +11,12 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       const addedProduct = action.product;
       const prodPrice = addedProduct.price;
-      const prodTitle = addedProduct.prodTitle;
+      const prodTitle = addedProduct.title;
 
       let updatedOrNewCartItem;
 
       if (state.items[addedProduct.id]) {
-        //already have item in the cart
+        // already have the item in the cart
         updatedOrNewCartItem = new CartItem(
           state.items[addedProduct.id].quantity + 1,
           prodPrice,
@@ -28,7 +27,7 @@ export default (state = initialState, action) => {
         updatedOrNewCartItem = new CartItem(1, prodPrice, prodTitle, prodPrice);
       }
       return {
-        //...state = not necessary to copy state as we update both state items
+        ...state,
         items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
         totalAmount: state.totalAmount + prodPrice
       };
