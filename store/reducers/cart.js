@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
         items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
         totalAmount: state.totalAmount + prodPrice
       };
+
     case REMOVE_FROM_CART:
       const selectedCartItem = state.items[action.productId];
       const currentQty = selectedCartItem.quantity;

@@ -21,7 +21,7 @@ const ProductsOverviewScreen = props => {
           title={itemData.item.title}
           price={itemData.item.price}
           onViewDetail={() => {
-            props.navigation.navigate('ProductDetail', {
+            props.navigation.navigate('ProductDetails', {
               productId: itemData.item.id,
               productTitle: itemData.item.title
             });
