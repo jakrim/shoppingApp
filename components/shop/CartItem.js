@@ -24,13 +24,15 @@ const CartItem = props => {
       </View>
       <View style={styles.itemData}>
         <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
-        <Touchable onPress={props.onRemove} style={styles.deleteButton}>
-          <Ionicons
-            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-            size={23}
-            color='red'
-          />
-        </Touchable>
+        {props.deletable && (
+          <Touchable onPress={props.onRemove} style={styles.deleteButton}>
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+              size={23}
+              color='red'
+            />
+          </Touchable>
+        )}
       </View>
     </View>
   );
