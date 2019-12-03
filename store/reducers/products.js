@@ -42,12 +42,12 @@ export default (state = initialState, action) => {
       );
       const updatedUserProducts = [...state.userProducts];
       updatedUserProducts[userProductIndex] = updatedProduct;
-      const availableProducts = state.availableProducts.findIndex(
+      const availableProductsIndex = state.availableProducts.findIndex(
         product => product.id === action.productId
       );
 
       const updatedAvailableProducts = [...state.availableProducts];
-      updatedAvailableProducts[availableProducts] = updatedProduct;
+      updatedAvailableProducts[availableProductsIndex] = updatedProduct;
 
       return {
         ...state,

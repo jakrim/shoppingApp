@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Platform,
+  Alert,
   StyleSheet
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -21,6 +22,7 @@ const EditProductScreen = props => {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+  const [titleIsValid, setTitleIsValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ''
   );
@@ -30,6 +32,11 @@ const EditProductScreen = props => {
   );
 
   const submitHandler = useCallback(() => {
+    if (!titleIsValid) {
+      return Alert.alert('Wrong input', 'Please check the errors in the form', [
+        { text: 'Okay' }
+      ]);
+    }
     if (editedProduct) {
       dispatch(
         productsActions.updateProduct(productId, title, description, imageUrl)
@@ -46,6 +53,15 @@ const EditProductScreen = props => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
+  const titleChangeHandler = text => {
+    if (text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+    }
+    setTitle(text);
+  };
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -54,8 +70,12 @@ const EditProductScreen = props => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={text => setTitle(text)}
+            onChangeText={titleChangeHandler}
+            autoCapitalize='sentences'
+            autoCorrect
+            returnKeyType='next'
           />
+          {!titleIsValid && <Text>Please enter a valid title!</Text>}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
@@ -72,6 +92,7 @@ const EditProductScreen = props => {
               style={styles.input}
               value={price}
               onChangeText={text => setPrice(text)}
+              keyboardType='decimal-pad'
             />
           </View>
         )}
