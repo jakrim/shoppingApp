@@ -5,6 +5,8 @@ import {
   Platform,
   Alert,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   StyleSheet
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -107,64 +109,66 @@ const EditProductScreen = props => {
   );
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior='padding'
-      keyboardVerticalOffset={100}
-    >
-      <ScrollView>
-        <View style={styles.form}>
-          <Input
-            id='title'
-            label='Title'
-            errorText='Please enter a valid title!'
-            autoCapitalize='sentences'
-            autoCorrect
-            returnKeyType='next'
-            onInputChange={inputChangeHandler}
-            initalValue={editedProduct ? editedProduct.title : ''}
-            initallyValid={!!editedProduct}
-            required
-          />
-          <Input
-            id='imageUrl'
-            label='Image Url'
-            errorText='Please enter a valid Image Url!'
-            returnKeyType='next'
-            onInputChange={inputChangeHandler}
-            initalValue={editedProduct ? editedProduct.imageUrl : ''}
-            initallyValid={!!editedProduct}
-            required
-          />
-          {editedProduct ? null : (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior='padding'
+        keyboardVerticalOffset={100}
+      >
+        <ScrollView>
+          <View style={styles.form}>
             <Input
-              id='price'
-              label='Price'
-              errorText='Please enter a valid price!'
-              keyboardType='decimal-pad'
+              id='title'
+              label='Title'
+              errorText='Please enter a valid title!'
+              autoCapitalize='sentences'
+              autoCorrect
               returnKeyType='next'
               onInputChange={inputChangeHandler}
+              initalValue={editedProduct ? editedProduct.title : ''}
+              initallyValid={!!editedProduct}
               required
-              min={0.1}
             />
-          )}
-          <Input
-            id='description'
-            label='Description'
-            errorText='Please enter a valid description!'
-            autoCapitalize='sentences'
-            autoCorrect
-            multiline
-            numberOfLines={3}
-            onInputChange={inputChangeHandler}
-            initalValue={editedProduct ? editedProduct.description : ''}
-            initallyValid={!!editedProduct}
-            required
-            minLength={5}
-          />
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            <Input
+              id='imageUrl'
+              label='Image Url'
+              errorText='Please enter a valid Image Url!'
+              returnKeyType='next'
+              onInputChange={inputChangeHandler}
+              initalValue={editedProduct ? editedProduct.imageUrl : ''}
+              initallyValid={!!editedProduct}
+              required
+            />
+            {editedProduct ? null : (
+              <Input
+                id='price'
+                label='Price'
+                errorText='Please enter a valid price!'
+                keyboardType='decimal-pad'
+                returnKeyType='next'
+                onInputChange={inputChangeHandler}
+                required
+                min={0.1}
+              />
+            )}
+            <Input
+              id='description'
+              label='Description'
+              errorText='Please enter a valid description!'
+              autoCapitalize='sentences'
+              autoCorrect
+              multiline
+              numberOfLines={3}
+              onInputChange={inputChangeHandler}
+              initalValue={editedProduct ? editedProduct.description : ''}
+              initallyValid={!!editedProduct}
+              required
+              minLength={5}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
