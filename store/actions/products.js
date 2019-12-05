@@ -14,7 +14,7 @@ export const fetchProducts = () => {
       );
 
       if (!response.ok) {
-        throw new Error('Something went wrong!');
+        throw new Error('Something went wrong in fetching products!');
       }
 
       const resData = await response.json();
@@ -73,8 +73,6 @@ export const createProduct = (title, description, imageUrl, price) => {
     );
 
     const resData = await response.json();
-
-    console.log(resData);
 
     dispatch({
       type: CREATE_PRODUCT,
