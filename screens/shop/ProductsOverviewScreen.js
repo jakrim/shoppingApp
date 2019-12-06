@@ -33,7 +33,7 @@ const ProductsOverviewScreen = props => {
       setError(err.message);
     }
     setIsRefreshing(false);
-  }, [dispatch, setIsLoading, setError]);
+  }, [dispatch, setIsLoading, setError, setIsRefreshing]);
 
   useEffect(() => {
     const willFocusSubscription = props.navigation.addListener(

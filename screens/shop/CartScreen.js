@@ -68,6 +68,7 @@ const CartScreen = props => {
         keyExtractor={item => item.productId}
         renderItem={itemData => (
           <CartItem
+            style={styles.cartItem}
             deletable
             quantity={itemData.item.quantity}
             title={itemData.item.productTitle}
@@ -103,6 +104,9 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: Colors.primary
+  },
+  cartItem: {
+    flex: 1
   }
 });
 
