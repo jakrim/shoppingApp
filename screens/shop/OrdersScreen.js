@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
+  Text,
   FlatList,
   ActivityIndicator,
   StyleSheet,
@@ -36,6 +37,15 @@ const OrdersScreen = () => {
       </View>
     );
   }
+
+  if (orders.length === 0) {
+    return (
+      <View style={styles.noOrders}>
+        <Text>You have no orders yet!</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={orders}
@@ -73,6 +83,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  noOrders: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 80,
+    fontFamily: 'open-sans',
+    fontSize: 22
   }
 });
 
