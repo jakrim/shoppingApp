@@ -1,11 +1,12 @@
-import React, { useState, useReducer, useCallback } from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import {
   ScrollView,
   View,
-  Text,
-  Button,
   KeyboardAvoidingView,
-  StyleSheet
+  StyleSheet,
+  Button,
+  ActivityIndicator,
+  Alert
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from 'react-redux';
@@ -41,6 +42,8 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = props => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
 
@@ -56,7 +59,13 @@ const AuthScreen = props => {
     formIsValid: false
   });
 
-  const authHandler = () => {
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error Occurred!', error, [{ text: 'Okay' }]);
+    }
+  }, [error]);
+
+  const authHandler = async () => {
     let action;
     if (isSignup) {
       action = authActions.signup(
@@ -69,7 +78,14 @@ const AuthScreen = props => {
         formState.inputValues.password
       );
     }
-    dispatch(action);
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -117,11 +133,15 @@ const AuthScreen = props => {
               initialValue=''
             />
             <View style={styles.buttonContainer}>
-              <Button
-                title={isSignup ? 'Sign Up' : 'Login'}
-                color={Colors.primary}
-                onPress={authHandler}
-              />
+              {isLoading ? (
+                <ActivityIndicator size='small' color={Colors.primary} />
+              ) : (
+                <Button
+                  title={isSignup ? 'Sign Up' : 'Login'}
+                  color={Colors.primary}
+                  onPress={authHandler}
+                />
+              )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
@@ -139,15 +159,18 @@ const AuthScreen = props => {
   );
 };
 
-AuthScreen.navigationOptions = navData => {
-  return {
-    headerTitle: 'Sign In'
-  };
+AuthScreen.navigationOptions = {
+  headerTitle: 'Authenticate'
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   authContainer: {
     width: '80%',
@@ -155,12 +178,9 @@ const styles = StyleSheet.create({
     maxHeight: 400,
     padding: 20
   },
-  gradient: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonContainer: { margin: 10 }
+  buttonContainer: {
+    marginTop: 10
+  }
 });
 
 export default AuthScreen;
