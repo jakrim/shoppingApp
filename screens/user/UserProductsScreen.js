@@ -35,6 +35,7 @@ const UserProductsScreen = props => {
       keyExtractor={item => item.id}
       renderItem={itemData => (
         <ProductItem
+          key={itemData.item.id}
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}

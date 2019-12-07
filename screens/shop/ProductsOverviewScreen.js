@@ -3,19 +3,19 @@ import {
   View,
   Text,
   FlatList,
-  Platform,
-  StyleSheet,
   Button,
-  ActivityIndicator
+  Platform,
+  ActivityIndicator,
+  StyleSheet
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
+import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/shop/ProductItem';
 import * as cartActions from '../../store/actions/cart';
 import * as productsActions from '../../store/actions/products';
 import Colors from '../../constants/Colors';
-import HeaderButton from '../../components/UI/HeaderButton';
 
 const ProductsOverviewScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,16 +33,16 @@ const ProductsOverviewScreen = props => {
       setError(err.message);
     }
     setIsRefreshing(false);
-  }, [dispatch, setIsLoading, setError, setIsRefreshing]);
+  }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    const willFocusSubscription = props.navigation.addListener(
+    const willFocusSub = props.navigation.addListener(
       'willFocus',
       loadProducts
     );
 
     return () => {
-      willFocusSubscription.remove();
+      willFocusSub.remove();
     };
   }, [loadProducts]);
 
@@ -54,7 +54,7 @@ const ProductsOverviewScreen = props => {
   }, [dispatch, loadProducts]);
 
   const selectItemHandler = (id, title) => {
-    props.navigation.navigate('ProductDetails', {
+    props.navigation.navigate('ProductDetail', {
       productId: id,
       productTitle: title
     });
@@ -63,7 +63,7 @@ const ProductsOverviewScreen = props => {
   if (error) {
     return (
       <View style={styles.centered}>
-        <Text>An error occurred</Text>
+        <Text>An error occurred!</Text>
         <Button
           title='Try again'
           onPress={loadProducts}
@@ -84,7 +84,7 @@ const ProductsOverviewScreen = props => {
   if (!isLoading && products.length === 0) {
     return (
       <View style={styles.centered}>
-        <Text>No products found. Add a product!</Text>
+        <Text>No products found. Maybe start adding some!</Text>
       </View>
     );
   }
@@ -113,7 +113,7 @@ const ProductsOverviewScreen = props => {
           />
           <Button
             color={Colors.primary}
-            title='Add To Cart'
+            title='To Cart'
             onPress={() => {
               dispatch(cartActions.addToCart(itemData.item));
             }}
@@ -153,11 +153,7 @@ ProductsOverviewScreen.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+  centered: { flex: 1, justifyContent: 'center', alignItems: 'center' }
 });
 
 export default ProductsOverviewScreen;
