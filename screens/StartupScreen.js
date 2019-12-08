@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  Text,
   ActivityIndicator,
   StyleSheet,
   AsyncStorage
 } from 'react-native';
-import Colors from '../constants/Colors';
-
 import { useDispatch } from 'react-redux';
+
+import Colors from '../constants/Colors';
 import * as authActions from '../store/actions/auth';
 
 const StartupScreen = props => {
@@ -22,16 +21,18 @@ const StartupScreen = props => {
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expirationDate } = transformedData;
-      const loginExpirationTime = new Date(expirationDate);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
 
-      if (loginExpirationTime <= new Date() || !token || !userId) {
+      if (expirationDate <= new Date() || !token || !userId) {
         props.navigation.navigate('Auth');
         return;
       }
 
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
       props.navigation.navigate('Shop');
-      dispatch(authActions.authenticate(userId, token));
+      dispatch(authActions.authenticate(userId, token, expirationTime));
     };
 
     tryLogin();
