@@ -7,24 +7,29 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/places.png",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#171717"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 3000
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.jessekrim.shopping-app",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.jessekrim.shopping_app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/places-adaptive.png",
         "backgroundColor": "#171717"
-      }
+      },
+      "permissions": ["WRITE_EXTERNAL_STORAGE"]
     },
     "description": "Expo Description: A basic shopping app built to learn React Native"
   }

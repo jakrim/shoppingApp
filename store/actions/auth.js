@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { APIKEY } from '../../data/api-key';
 
 // export const SIGNUP = 'SIGNUP';
 // export const LOGIN = 'LOGIN';
@@ -17,7 +18,7 @@ export const authenticate = (userId, token, expiryTime) => {
 export const signup = (email, password) => {
   return async dispatch => {
     const response = await fetch(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBt3tslgRGwwYBINKFNRXXZQPnufRL9k8U',
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${APIKEY}`,
       {
         method: 'POST',
         headers: {
@@ -42,7 +43,6 @@ export const signup = (email, password) => {
     }
 
     const resData = await response.json();
-    console.log(resData);
     dispatch(
       authenticate(
         resData.localId,
@@ -60,7 +60,7 @@ export const signup = (email, password) => {
 export const login = (email, password) => {
   return async dispatch => {
     const response = await fetch(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBt3tslgRGwwYBINKFNRXXZQPnufRL9k8U',
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${APIKEY}`,
       {
         method: 'POST',
         headers: {
