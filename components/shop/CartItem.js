@@ -8,8 +8,10 @@ import {
   Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import numeral from 'numeral';
 
 const CartItem = props => {
+  let formattedNumber = numeral(props.amount).format('0.0a');
   let Touchable = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -23,7 +25,7 @@ const CartItem = props => {
         <Text style={styles.mainText}>{props.title}</Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
+        <Text style={styles.mainText}>${formattedNumber}</Text>
         {props.deletable && (
           <Touchable onPress={props.onRemove} style={styles.deleteButton}>
             <Ionicons
@@ -43,8 +45,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 20
+    justifyContent: 'space-between'
   },
   itemData: {
     flexDirection: 'row',

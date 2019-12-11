@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import numeral from 'numeral';
 
 import CartItem from './CartItem';
 import Card from '../UI/Card';
@@ -7,10 +8,13 @@ import Colors from '../../constants/Colors';
 
 const OrderItem = props => {
   const [showDetails, setShowDetails] = useState(false);
+
+  let formattedNumber = numeral(props.amount).format('0.0a');
+
   return (
     <Card style={styles.orderItem}>
       <View style={styles.summary}>
-        <Text style={styles.totalAmount}>${props.amount.toFixed(2)}</Text>
+        <Text style={styles.totalAmount}>${formattedNumber}</Text>
         <Text style={styles.date}>{props.date}</Text>
       </View>
       <Button
