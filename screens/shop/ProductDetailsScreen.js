@@ -31,7 +31,9 @@ const ProductDetailScreen = props => {
           }}
         />
       </View>
-      <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
+      <Text style={styles.price}>
+        ${selectedProduct.price.toLocaleString()}
+      </Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
     </ScrollView>
   );
@@ -46,7 +48,8 @@ ProductDetailScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: 300
+    height: 250,
+    justifyContent: 'center'
   },
   actions: {
     marginVertical: 10,
