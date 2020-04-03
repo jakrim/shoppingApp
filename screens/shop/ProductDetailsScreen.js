@@ -13,8 +13,8 @@ import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
 
 const ProductDetailScreen = props => {
-  const productId = props.navigation.getParam('productId');
-  const selectedProduct = useSelector(state =>
+  const productId = props.route.params.productId;
+  selectedProduct = useSelector(state =>
     state.products.availableProducts.find(prod => prod.id === productId)
   );
   const dispatch = useDispatch();
@@ -39,9 +39,9 @@ const ProductDetailScreen = props => {
   );
 };
 
-ProductDetailScreen.navigationOptions = navData => {
+export const productDetailsScreenOptions = navData => {
   return {
-    headerTitle: navData.navigation.getParam('productTitle')
+    headerTitle: navData.route.params.productTitle
   };
 };
 
